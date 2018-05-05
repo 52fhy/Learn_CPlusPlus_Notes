@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="utf-8">
+<title>类和对象 - Documents</title>
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+<link rel="stylesheet" href="assets/css/bulma.min.css">
+<link rel="stylesheet" href="assets/css/app.css">
+<!--[if lt IE 9]>
+<script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<link rel="shortcut icon" href="">
+</head>
+<body dir="ltr">
+
+<nav class="columns navbar">
+  <div class="column logo is-3 is-offset-1">
+    <a class="is-brand" href="index.html">
+      Documents
+    </a>
+  </div>
+</nav>
+
+<div class="columns content">
+  <div class="column is-2-desktop is-3-widescreen is-hidden-touch">
+  </div>
+  <div class="column article-container is-11-tablet is-8-desktop is-6-widescreen">
+    <div class="breadcrumb-area"><a href="index.html" class="breadcrumb-item">Home</a><span class="breadcrumb-delimiter"> &gt; </span><a href="03类和对象.html" class="breadcrumb-item">类和对象</a></div>
+    <h1 class="article-title">类和对象</h1>
+    <div class="article">
+      <h2 id="构造函数和析构函数">构造函数和析构函数 <a class="markdownIt-Anchor" href="#构造函数和析构函数">#</a></h2>
+<p>首先看一个简单示例：</p>
+<pre class="hljs"><code><span class="hljs-comment">/**
+* file MyClass.cpp
+*/</span>
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span>
+{</span>
+  <span class="hljs-keyword">private</span>:
+    <span class="hljs-keyword">int</span> num;
+
+  <span class="hljs-keyword">public</span>:
+    MyClass(<span class="hljs-keyword">int</span> n = <span class="hljs-number">0</span>) : num(n) {}<span class="hljs-comment">//构造函数</span>
+    ~MyClass()
+    {
+        <span class="hljs-built_in">cout</span> &lt;&lt; num &lt;&lt; <span class="hljs-string">"执行析构函数"</span> &lt;&lt; <span class="hljs-built_in">endl</span>;
+    };<span class="hljs-comment">//析构函数</span>
+};
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    MyClass a; <span class="hljs-comment">//最后自动执行析构</span>
+    <span class="hljs-function">MyClass <span class="hljs-title">b</span><span class="hljs-params">(<span class="hljs-number">3</span>)</span></span>; <span class="hljs-comment">//最后自动执行析构</span>
+    MyClass *p = <span class="hljs-keyword">new</span> MyClass(<span class="hljs-number">1</span>);
+    MyClass *q = <span class="hljs-keyword">new</span> MyClass(<span class="hljs-number">2</span>); <span class="hljs-comment">//不会执行析构</span>
+    <span class="hljs-keyword">delete</span> p;                    <span class="hljs-comment">//先执行析构</span>
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>这里定义了一个类 <code>MyClass</code> 。注意类结尾需要用 <code>;</code> 结束！</p>
+<p>其中与类名相同的函数叫<strong>构造函数</strong>，与类名相同且前面有 <code>~</code> 的函数是<strong>析构函数</strong>。</p>
+<p>由于形参类型的不同或者形参个数的不同，构造函数可以有很多个。如果没有写构造函数，C++会默认生成一个空的构造函数，形参和函数体均为空。注意构造函数没有返回值，无需用户手动调用，系统会自动调用。</p>
+<p>构造函数可以有形参，并可以在函数体内对成员进行初始化：</p>
+<pre class="hljs"><code>MyClass(<span class="hljs-keyword">int</span> n = <span class="hljs-number">0</span>){
+    num = n;
+}<span class="hljs-comment">//构造函数</span>
+</code></pre>
+<p>也可以写成：</p>
+<pre class="hljs"><code>MyClass(<span class="hljs-keyword">int</span> n = <span class="hljs-number">0</span>) : num(n) {}<span class="hljs-comment">//构造函数</span>
+</code></pre>
+<p>这种形式是在原来函数首部的末尾加一个冒号，然后列出参数的初始化表，有了初始化表，构造函数的函数体一般为空。</p>
+<p>析构函数只能有一个，没有形参和返回值。当对象的声明周期结束时，将自动执行。</p>
+<p>上面程序执行后会输出：</p>
+<pre class="hljs"><code><span class="hljs-number">1</span>执行析构函数
+<span class="hljs-number">3</span>执行析构函数
+<span class="hljs-number">0</span>执行析构函数
+</code></pre>
+<p>可以发现，由<code>new</code>关键字创建的对象，只有执行<code>delete</code>关键字才会执行析构函数。</p>
+<p>另外，析构函数在执行顺序上，是最后面调用的构造函数对应的析构函数先执行。如果是调用<code>delete</code>关键字执行析构，则是先调用<code>delete</code>者先执行析构。</p>
+<h2 id="继承">继承 <a class="markdownIt-Anchor" href="#继承">#</a></h2>
+<p>继承（Inheritance）可以理解为一个类从另一个类获取成员变量和成员函数的过程。</p>
+<p>例如类 B 继承于类 A，那么 B 就拥有 A 的成员变量和成员函数。被继承的类称为<code>父类</code>或<code>基类</code>，继承的类称为<code>子类</code>或<code>派生类</code>。</p>
+<pre class="hljs"><code><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">People</span>{</span>
+    
+}
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Stutent</span>:</span> <span class="hljs-keyword">public</span> People{
+
+}
+</code></pre>
+<h3 id="继承方式">继承方式 <a class="markdownIt-Anchor" href="#继承方式">#</a></h3>
+<p>继承方式包括 public（公有的）、private（私有的）和 protected（受保护的），此项是可选的，如果不写，那么默认为 private。</p>
+<ol>
+<li>
+<p>public继承方式<br>
+基类中所有 public 成员在派生类中为 public 属性；<br>
+基类中所有 protected 成员在派生类中为 protected 属性；<br>
+基类中所有 private 成员在派生类中不能使用。</p>
+</li>
+<li>
+<p>protected继承方式<br>
+基类中的所有 public 成员在派生类中为 protected 属性；<br>
+基类中的所有 protected 成员在派生类中为 protected 属性；<br>
+基类中的所有 private 成员在派生类中不能使用。</p>
+</li>
+<li>
+<p>private继承方式<br>
+基类中的所有 public 成员在派生类中均为 private 属性；<br>
+基类中的所有 protected 成员在派生类中均为 private 属性；<br>
+基类中的所有 private 成员在派生类中不能使用。</p>
+</li>
+</ol>
+<h3 id="构造函数的继承">构造函数的继承 <a class="markdownIt-Anchor" href="#构造函数的继承">#</a></h3>
+<p>继承仅能继承普通的成员函数，类的构造函数不能被继承。构造函数不能被继承是有道理的，因为即使继承了，它的名字和派生类的名字也不一样，不能成为派生类的构造函数，当然更不能成为普通的成员函数。</p>
+<p>在设计派生类时，对继承过来的成员变量的初始化工作也要由派生类的构造函数完成，<strong>但是大部分基类都有 private 属性的成员变量，它们在派生类中无法访问，更不能使用派生类的构造函数来初始化。</strong>这种矛盾在C++继承中是普遍存在的，解决这个问题的思路是：在派生类的构造函数中调用基类的构造函数。</p>
+<p>下面的例子展示了如何在派生类的构造函数中调用基类的构造函数：</p>
+<pre class="hljs"><code><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+<span class="hljs-comment">//基类People</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">People</span>{</span>
+<span class="hljs-keyword">protected</span>:
+    <span class="hljs-keyword">char</span> *m_name;
+    <span class="hljs-keyword">int</span> m_age;
+<span class="hljs-keyword">public</span>:
+    People(<span class="hljs-keyword">char</span>*, <span class="hljs-keyword">int</span>);
+};
+People::People(<span class="hljs-keyword">char</span> *name, <span class="hljs-keyword">int</span> age): m_name(name), m_age(age){}
+<span class="hljs-comment">//派生类Student</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Student</span>:</span> <span class="hljs-keyword">public</span> People{
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-keyword">float</span> m_score;
+<span class="hljs-keyword">public</span>:
+    Student(<span class="hljs-keyword">char</span> *name, <span class="hljs-keyword">int</span> age, <span class="hljs-keyword">float</span> score);
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">display</span><span class="hljs-params">()</span></span>;
+};
+
+<span class="hljs-comment">//这里People(name, age)就是调用基类的构造函数</span>
+Student::Student(<span class="hljs-keyword">char</span> *name, <span class="hljs-keyword">int</span> age, <span class="hljs-keyword">float</span> score): People(name, age), m_score(score){ }
+
+<span class="hljs-keyword">void</span> Student::display(){
+    <span class="hljs-built_in">cout</span> &lt;&lt; m_name&lt;&lt;<span class="hljs-string">"的年龄是"</span>&lt;&lt;m_age&lt;&lt;<span class="hljs-string">"，成绩是"</span>&lt;&lt;m_score&lt;&lt;<span class="hljs-string">"。"</span>&lt;&lt;<span class="hljs-built_in">endl</span>;
+}
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-function">Student <span class="hljs-title">stu</span><span class="hljs-params">(<span class="hljs-string">"小明"</span>, <span class="hljs-number">16</span>, <span class="hljs-number">90.5</span>)</span></span>;
+    stu.display();
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>运行结果为：<br>
+小明的年龄是16，成绩是90.5。</p>
+<p>通过派生类创建对象时必须要调用基类的构造函数，这是语法规定。换句话说，定义派生类构造函数时最好指明基类构造函数；如果不指明，就调用基类的默认构造函数（不带参数的构造函数）；如果没有默认构造函数，那么编译失败。例如，基类申明了带参数的构造函数，这时候编译器不会再生成默认的构造函数，如果派生类直接生成不带参数的对象时会报错：</p>
+<pre class="hljs"><code><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">People2</span>{</span>
+
+<span class="hljs-keyword">protected</span>:
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *name;
+    <span class="hljs-keyword">int</span> age;
+
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-comment">//People2(){};//此句如果注释，派生类直接生成不带参数的对象时会报错</span>
+    People2(<span class="hljs-keyword">char</span> *name, <span class="hljs-keyword">int</span> age);
+};
+
+People2::People2(<span class="hljs-keyword">char</span> *name, <span class="hljs-keyword">int</span> age):name(name), age(age){}
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Student</span>:</span> <span class="hljs-keyword">public</span> People2{
+<span class="hljs-keyword">protected</span>:
+    <span class="hljs-keyword">float</span> score;
+<span class="hljs-keyword">public</span>:
+    Student(){};
+};
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-function">Student <span class="hljs-title">stu</span><span class="hljs-params">()</span></span>;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<h2 id="this指针">this指针 <a class="markdownIt-Anchor" href="#this指针">#</a></h2>
+<p>this 是 C++ 中的一个关键字，也是一个 const 指针，它指向当前对象，通过它可以访问当前对象的所有成员。</p>
+<p>下面是使用 this 的一个完整示例：</p>
+<pre class="hljs"><code><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Student</span>{</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setname</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *name)</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setage</span><span class="hljs-params">(<span class="hljs-keyword">int</span> age)</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setscore</span><span class="hljs-params">(<span class="hljs-keyword">float</span> score)</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">show</span><span class="hljs-params">()</span></span>;
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-keyword">char</span> *name;
+    <span class="hljs-keyword">int</span> age;
+    <span class="hljs-keyword">float</span> score;
+};
+<span class="hljs-keyword">void</span> Student::setname(<span class="hljs-keyword">char</span> *name){
+    <span class="hljs-keyword">this</span>-&gt;name = name;
+}
+<span class="hljs-keyword">void</span> Student::setage(<span class="hljs-keyword">int</span> age){
+    <span class="hljs-keyword">this</span>-&gt;age = age;
+}
+<span class="hljs-keyword">void</span> Student::setscore(<span class="hljs-keyword">float</span> score){
+    <span class="hljs-keyword">this</span>-&gt;score = score;
+}
+<span class="hljs-keyword">void</span> Student::show(){
+    <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-keyword">this</span>-&gt;name&lt;&lt;<span class="hljs-string">"的年龄是"</span>&lt;&lt;<span class="hljs-keyword">this</span>-&gt;age&lt;&lt;<span class="hljs-string">"，成绩是"</span>&lt;&lt;<span class="hljs-keyword">this</span>-&gt;score&lt;&lt;<span class="hljs-built_in">endl</span>;
+}
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+    Student *pstu = <span class="hljs-keyword">new</span> Student;
+    pstu -&gt; setname(<span class="hljs-string">"李华"</span>);
+    pstu -&gt; setage(<span class="hljs-number">16</span>);
+    pstu -&gt; setscore(<span class="hljs-number">96.5</span>);
+    pstu -&gt; show();
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>运行结果：<br>
+李华的年龄是16，成绩是96.5</p>
+<p>this 只能用在类的内部，通过 this 可以访问类的所有成员，包括 private、protected、public 属性的。</p>
+<p>本例中成员函数的参数和成员变量重名，只能通过 this 区分。以成员函数<code>setname(char *name)</code>为例，它的形参是name，和成员变量name重名，如果写作<code>name = name;</code>这样的语句，就是给形参<code>name</code>赋值，而不是给成员变量<code>name</code>赋值。而写作<code>this -&gt; name = name;</code>后，<code>=</code>左边的<code>name</code>就是成员变量，右边的name就是形参，一目了然。</p>
+<blockquote>
+<p>注意，this 是一个指针，要用-&gt;来访问成员变量或成员函数。</p>
+</blockquote>
+<h2 id="友元函数">友元函数 <a class="markdownIt-Anchor" href="#友元函数">#</a></h2>
+<p>在当前类以外定义的、不属于当前类的函数也可以在类中声明，但要在前面加 <code>friend</code> 关键字，这样就构成了友元函数。</p>
+<p>友元函数:</p>
+<ol>
+<li>可以是不属于任何类的非成员函数</li>
+<li>也可以是其他类的成员函数。</li>
+</ol>
+
+      
+    </div>
+    <div  dir="ltr" class="level article-bar is-mobile">
+      <div class="level-item has-text-centered">
+        <a title="previous page" class="previouse-article-link" href="02语言特性.html"><span class="icon icon-previous" data-icon="previous"></span><span class="link-content">&laquo; Previous</span></a>
+      </div>
+      <div class="level-item has-text-centered">
+        <a title="font size" class="link-item link-item-size">
+          <span class="icon icon-size" data-icon="size"></span>
+        </a>
+      </div>
+      <div class="level-item has-text-centered">
+        <a title="table of content" class="link-item link-item-toc">
+          <span class="icon icon-toc" data-icon="toc"></span>
+        </a>
+      </div>
+      <div class="level-item has-text-centered">
+        <a title="top" href="#">
+          <span class="icon icon-up" data-icon="up"></span>
+          <span class="link-content">⤊ Top</span>
+        </a>
+      </div>
+      <div class="level-item has-text-centered">
+        <a title="next page" class="next-article-link" href="04模板.html"><span class="icon icon-next" data-icon="next"></span><span class="link-content">Next &raquo;</span></a>
+      </div>
+    </div>
+  </div>
+  <div class="column is-2-widescreen is-hidden">
+  </div>
+</div>
+
+<div class="columns foot">
+  <div class="column is-3 is-offset-9 build-by">
+    Build by <a href="https://github.com/ruanyf/loppo" target="_blank">Loppo</a> 0.6.6
+  </div>
+</div>
+
+<div class="book-toc notification is-warning is-hidden">
+  <h3>Table of chapters &nbsp;<span class="title-close"><a class="button is-danger"> Close </a></span></h3>
+  <ul class="chapter-area"><li class="chapter-item "><a href="01环境搭建.html">环境搭建</a></li><li class="chapter-item "><a href="02语言特性.html">语言特性</a></li><li class="chapter-item chapter-item-current"><a href="03类和对象.html">类和对象</a></li><li class="chapter-item "><a href="04模板.html">include<iostream></a></li><li class="chapter-item "><a href="05运算符重载.html">05运算符重载.md</a></li><li class="chapter-item "><a href="06异常处理.html">06异常处理.md</a></li></ul>
+</div>
+
+<div class="progress-indicator"></div>
+
+<!-- SCRIPTS -->
+<script>
+  var LOPPO = {};
+  LOPPO.current_path = '03类和对象.md';
+  LOPPO.relative_root_path = '';
+  LOPPO.article_toc = "<ul class=\"markdownIt-TOC\">\n<li><a href=\"#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0\">构造函数和析构函数</a></li>\n<li><a href=\"#%E7%BB%A7%E6%89%BF\">继承</a>\n<ul>\n<li><a href=\"#%E7%BB%A7%E6%89%BF%E6%96%B9%E5%BC%8F\">继承方式</a></li>\n<li><a href=\"#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%9A%84%E7%BB%A7%E6%89%BF\">构造函数的继承</a></li>\n</ul>\n</li>\n<li><a href=\"#this%E6%8C%87%E9%92%88\">this指针</a></li>\n<li><a href=\"#%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0\">友元函数</a></li>\n</ul>\n";
+</script>
+<script src="assets/js/app.js"></script>
+
+</body>
+</html>
+

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="utf-8">
+<title>环境搭建 - Documents</title>
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+<link rel="stylesheet" href="assets/css/bulma.min.css">
+<link rel="stylesheet" href="assets/css/app.css">
+<!--[if lt IE 9]>
+<script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<link rel="shortcut icon" href="">
+</head>
+<body dir="ltr">
+
+<nav class="columns navbar">
+  <div class="column logo is-3 is-offset-1">
+    <a class="is-brand" href="index.html">
+      Documents
+    </a>
+  </div>
+</nav>
+
+<div class="columns content">
+  <div class="column is-2-desktop is-3-widescreen is-hidden-touch">
+  </div>
+  <div class="column article-container is-11-tablet is-8-desktop is-6-widescreen">
+    <div class="breadcrumb-area"><a href="index.html" class="breadcrumb-item">Home</a><span class="breadcrumb-delimiter"> &gt; </span><a href="01环境搭建.html" class="breadcrumb-item">环境搭建</a></div>
+    <h1 class="article-title">环境搭建</h1>
+    <div class="article">
+      <p>Unix环境自带<code>GCC</code>，直接可以编译C<ins>程序。Windows环境可以安装MinGW，配置好环境变量后，也可以像Unix那样编译C</ins>程序。</p>
+<h2 id="mingw安装">MinGW安装 <a class="markdownIt-Anchor" href="#mingw安装">#</a></h2>
+<p>MinGW下载地址：MinGW Distro - <a href="http://nuwen.net" target="_blank" rel="noopener">nuwen.net</a>  <a href="https://nuwen.net/mingw.html" target="_blank" rel="noopener">https://nuwen.net/mingw.html</a></p>
+<p>GCC 7.2.0 :</p>
+<p><a href="https://nuwen.net/files/mingw/mingw-15.1.exe" target="_blank" rel="noopener">mingw-15.1.exe</a> (74.2 MB)：完整版本</p>
+<p><a href="https://nuwen.net/files/mingw/mingw-15.1-without-git.exe" target="_blank" rel="noopener">mingw-15.1-without-git.exe</a> (40.4 MB) : 不含git版本</p>
+<p>下载后，安装到<code>C:\mingw</code>目录，然后在环境变量添加<code>C:\mingw\bin</code>，重启电脑，在命令行输入<code>gcc --version</code>可以查看当前版本。</p>
+<pre class="hljs"><code>gcc --version
+gcc.exe (GCC) 7.1.0
+</code></pre>
+<h2 id="运行c程序">运行C++程序 <a class="markdownIt-Anchor" href="#运行c程序">#</a></h2>
+<p>编写Hello World程序：</p>
+<pre class="hljs"><code><span class="hljs-comment">/**
+* file c:\Projects\HelloWorld.cpp
+**/</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Hello World!"</span>;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>在代码所在目录，命令行里输入：</p>
+<pre class="hljs"><code>g++ HelloWorld.cpp -o HelloWorld 
+HelloWorld
+</code></pre>
+<p>输出：</p>
+<pre class="hljs"><code>Hello World!
+</code></pre>
+<p>代码简要说明：<br>
+1、C<ins>里使用<code>cout &lt;&lt;</code> 输出内容到终端，需要引入<code>iostream</code>头文件。C</ins>标准头文件不带<code>.h</code>后缀。<br>
+2、C++里加入了命名空间的概念，类似JAVA里的包。默认使用<code>std</code>命名空间：<code>using namespace std;</code>。</p>
+<h2 id="c开发和应用方向">C++开发和应用方向 <a class="markdownIt-Anchor" href="#c开发和应用方向">#</a></h2>
+<ul>
+<li>系统编程</li>
+<li>应用编程</li>
+<li>网络编程</li>
+<li>嵌入式开发</li>
+<li>android底层和中间件开发</li>
+<li>驱动开发</li>
+<li>游戏工具开发</li>
+</ul>
+<h2 id="c学习参考">C++学习参考 <a class="markdownIt-Anchor" href="#c学习参考">#</a></h2>
+<p>书籍：</p>
+<ul>
+<li>《C++面向对象程序设计教程》游洪跃，清华大学出版社</li>
+</ul>
+<p>在线教程：</p>
+<ul>
+<li>C<ins>入门教程：C</ins>基础教程，含进阶（2017最新版）_C语言中文网  <a href="http://c.biancheng.net/cpp/biancheng/cpp/rumen/" target="_blank" rel="noopener">http://c.biancheng.net/cpp/biancheng/cpp/rumen/</a></li>
+</ul>
+<p>博客：</p>
+<ul>
+<li>C++学习之开发环境搭建篇（一） - 寻风问雨 - 博客园  <a href="http://www.cnblogs.com/gollynoval/p/C_plus_plus.html" target="_blank" rel="noopener">http://www.cnblogs.com/gollynoval/p/C_plus_plus.html</a></li>
+<li>【C++】 - 种瓜大爷 - CSDN博客  <a href="http://blog.csdn.net/czg13548930186/article/category/7051501" target="_blank" rel="noopener">http://blog.csdn.net/czg13548930186/article/category/7051501</a></li>
+</ul>
+<p>开发工具：</p>
+<ul>
+<li>Visual Studio Code</li>
+<li>Visual Studio 2015</li>
+<li>CLion</li>
+<li>Qt Creator</li>
+</ul>
+
+      
+    </div>
+    <div  dir="ltr" class="level article-bar is-mobile">
+      <div class="level-item has-text-centered">
+        <a title="previous page" class="previouse-article-link" href="index.html"><span class="icon icon-previous" data-icon="previous"></span><span class="link-content">&laquo; Previous</span></a>
+      </div>
+      <div class="level-item has-text-centered">
+        <a title="font size" class="link-item link-item-size">
+          <span class="icon icon-size" data-icon="size"></span>
+        </a>
+      </div>
+      <div class="level-item has-text-centered">
+        <a title="table of content" class="link-item link-item-toc">
+          <span class="icon icon-toc" data-icon="toc"></span>
+        </a>
+      </div>
+      <div class="level-item has-text-centered">
+        <a title="top" href="#">
+          <span class="icon icon-up" data-icon="up"></span>
+          <span class="link-content">⤊ Top</span>
+        </a>
+      </div>
+      <div class="level-item has-text-centered">
+        <a title="next page" class="next-article-link" href="02语言特性.html"><span class="icon icon-next" data-icon="next"></span><span class="link-content">Next &raquo;</span></a>
+      </div>
+    </div>
+  </div>
+  <div class="column is-2-widescreen is-hidden">
+  </div>
+</div>
+
+<div class="columns foot">
+  <div class="column is-3 is-offset-9 build-by">
+    Build by <a href="https://github.com/ruanyf/loppo" target="_blank">Loppo</a> 0.6.6
+  </div>
+</div>
+
+<div class="book-toc notification is-warning is-hidden">
+  <h3>Table of chapters &nbsp;<span class="title-close"><a class="button is-danger"> Close </a></span></h3>
+  <ul class="chapter-area"><li class="chapter-item chapter-item-current"><a href="01环境搭建.html">环境搭建</a></li><li class="chapter-item "><a href="02语言特性.html">语言特性</a></li><li class="chapter-item "><a href="03类和对象.html">类和对象</a></li><li class="chapter-item "><a href="04模板.html">include<iostream></a></li><li class="chapter-item "><a href="05运算符重载.html">05运算符重载.md</a></li><li class="chapter-item "><a href="06异常处理.html">06异常处理.md</a></li></ul>
+</div>
+
+<div class="progress-indicator"></div>
+
+<!-- SCRIPTS -->
+<script>
+  var LOPPO = {};
+  LOPPO.current_path = '01环境搭建.md';
+  LOPPO.relative_root_path = '';
+  LOPPO.article_toc = "<ul class=\"markdownIt-TOC\">\n<li><a href=\"#mingw%E5%AE%89%E8%A3%85\">MinGW安装</a></li>\n<li><a href=\"#%E8%BF%90%E8%A1%8Cc%E7%A8%8B%E5%BA%8F\">运行C++程序</a></li>\n<li><a href=\"#c%E5%BC%80%E5%8F%91%E5%92%8C%E5%BA%94%E7%94%A8%E6%96%B9%E5%90%91\">C++开发和应用方向</a></li>\n<li><a href=\"#c%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83\">C++学习参考</a></li>\n</ul>\n";
+</script>
+<script src="assets/js/app.js"></script>
+
+</body>
+</html>
+

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="utf-8">
+<title>语言特性 - Documents</title>
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+<link rel="stylesheet" href="assets/css/bulma.min.css">
+<link rel="stylesheet" href="assets/css/app.css">
+<!--[if lt IE 9]>
+<script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<link rel="shortcut icon" href="">
+</head>
+<body dir="ltr">
+
+<nav class="columns navbar">
+  <div class="column logo is-3 is-offset-1">
+    <a class="is-brand" href="index.html">
+      Documents
+    </a>
+  </div>
+</nav>
+
+<div class="columns content">
+  <div class="column is-2-desktop is-3-widescreen is-hidden-touch">
+  </div>
+  <div class="column article-container is-11-tablet is-8-desktop is-6-widescreen">
+    <div class="breadcrumb-area"><a href="index.html" class="breadcrumb-item">Home</a><span class="breadcrumb-delimiter"> &gt; </span><a href="02语言特性.html" class="breadcrumb-item">语言特性</a></div>
+    <h1 class="article-title">语言特性</h1>
+    <div class="article">
+      <p>C++ 是在C语言的基础上改进的，C语言的很多语法在 C++ 中依然广泛使用，例如：</p>
+<ul>
+<li>C++ 仍然使用 char、short、int、long、float、double 等基本数据类型；</li>
+<li>C++ 仍然使用 if...else、while、for、switch、break 等分支或循环结构；</li>
+<li>C++ 仍然使用 +、-、*、/、%、++、--、&lt;&lt;、&gt;&gt; 等运算符；</li>
+<li>C++ 仍然使用 typedef、#define、enum、struct 等；</li>
+<li>C++ 仍然使用C语言中经典的指针（Pointer），并且使用范围有增无减，甚至不可或缺。</li>
+</ul>
+<p>C++相比C语言，增加了一些新的特性。</p>
+<h2 id="命名空间">命名空间 <a class="markdownIt-Anchor" href="#命名空间">#</a></h2>
+<p>一个中大型软件往往由多名程序员共同开发，会使用大量的变量和函数，不可避免地会出现变量或函数的命名冲突。当所有人的代码都测试通过，没有问题时，将它们结合到一起就有可能会出现命名冲突。</p>
+<p>为了解决合作开发时的命名冲突问题，C++ 引入了命名空间（Namespace）的概念。</p>
+<p>不同命名空间里的同一个变量名不会冲突。示例：</p>
+<pre class="hljs"><code><span class="hljs-keyword">namespace</span> Li{  <span class="hljs-comment">//小李的变量定义</span>
+    FILE fp = <span class="hljs-literal">NULL</span>;
+}
+<span class="hljs-keyword">namespace</span> Han{  <span class="hljs-comment">//小韩的变量定义</span>
+    FILE fp = <span class="hljs-literal">NULL</span>
+}
+</code></pre>
+<blockquote>
+<p>命名空间有时也被称为名字空间、名称空间。</p>
+</blockquote>
+<p>namespace 是C++中的关键字，用来定义一个命名空间，语法格式为：</p>
+<pre class="hljs"><code><span class="hljs-keyword">namespace</span> name{
+    <span class="hljs-comment">//variables, functions, classes</span>
+}
+</code></pre>
+<p>name是命名空间的名字，它里面可以包含变量、函数、类、typedef、#define 等，最后由<code>{ }</code>包围。</p>
+<p>使用变量、函数时要指明它们所在的命名空间。以上面的 fp 变量为例，可以这样来使用：</p>
+<pre class="hljs"><code>Li :: fp = fopen(<span class="hljs-string">"one.txt"</span>, <span class="hljs-string">"r"</span>);  <span class="hljs-comment">//使用小李定义的变量 fp</span>
+Han :: fp = fopen(<span class="hljs-string">"two.txt"</span>, <span class="hljs-string">"rb+"</span>);  <span class="hljs-comment">//使用小韩定义的变量 fp</span>
+</code></pre>
+<p><code>::</code>是一个新符号，称为域解析操作符，在C++中用来指明要使用的命名空间。</p>
+<h2 id="输入输出">输入输出 <a class="markdownIt-Anchor" href="#输入输出">#</a></h2>
+<p>使用<code>cout</code>和<code>cin</code>表示输出、输入。示例：</p>
+<pre class="hljs"><code><span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"hello"</span> &lt;&lt; <span class="hljs-built_in">endl</span>; <span class="hljs-comment">//输出"hello"</span>
+</code></pre>
+<pre class="hljs"><code><span class="hljs-keyword">int</span> m,n;
+<span class="hljs-built_in">cin</span> &gt;&gt; m &gt;&gt; n;
+</code></pre>
+<p>从键盘可以依次两个数赋值给m,n。</p>
+<p>在C语言中，要求变量定义必须全放在执行语句之前，C++里没有限制。</p>
+<h2 id="定义常量">定义常量 <a class="markdownIt-Anchor" href="#定义常量">#</a></h2>
+<p>C语言使用<code>#define</code>定义符号常量，但这只是一种宏定义，并不是真正的变量，没有数据类型，不占用存储空间，在预编译的时候会进行字符替换。</p>
+<p>C++提供了<code>const</code>关键字用于定义常量。</p>
+<pre class="hljs"><code><span class="hljs-keyword">const</span> <span class="hljs-keyword">float</span> PI = <span class="hljs-number">3.14159</span>;
+</code></pre>
+<p>常量一旦定义，便不能修改其值。</p>
+<h2 id="函数重载">函数重载 <a class="markdownIt-Anchor" href="#函数重载">#</a></h2>
+<p>C++里允许多个不同形参个数或者不同形参类型的同名函数存在，这就是函数重载。</p>
+<p>示例：</p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">max</span><span class="hljs-params">(<span class="hljs-keyword">int</span> m, <span class="hljs-keyword">int</span> n)</span></span>{
+    <span class="hljs-keyword">return</span> m &gt; n ? m : n; 
+}
+
+<span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">max</span><span class="hljs-params">(<span class="hljs-keyword">float</span> m, <span class="hljs-keyword">float</span> n)</span></span>{
+    <span class="hljs-keyword">return</span> m &gt; n ? m : n; 
+}
+</code></pre>
+<p>实际调用的时候会根据形参类型自动调用相应的函数。</p>
+<h2 id="函数默认值">函数默认值 <a class="markdownIt-Anchor" href="#函数默认值">#</a></h2>
+<p>可以给函数定义默认值：</p>
+<p>1、如果有函数申明，在函数申明里定义默认值；无函数申明的函数，直接在函数定义处定义默认值；<br>
+2、一个形参定义了默认值，那么它右边的所有形参都要定义默认值。</p>
+<p>示例：</p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">max</span><span class="hljs-params">(<span class="hljs-keyword">int</span> m, <span class="hljs-keyword">int</span> n = <span class="hljs-number">0</span>)</span></span>;<span class="hljs-comment">//函数申明</span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">max</span><span class="hljs-params">(<span class="hljs-keyword">int</span> m, <span class="hljs-keyword">int</span> n)</span></span>{
+    <span class="hljs-keyword">return</span> m &gt; n ? m : n; 
+}
+
+</code></pre>
+<p>函数定义了默认值，调用的时候有默认值的形参可以不给实参。示例：</p>
+<pre class="hljs"><code><span class="hljs-built_in">cout</span> &lt;&lt; max(<span class="hljs-number">5</span>);
+</code></pre>
+<h2 id="变量引用">变量引用 <a class="markdownIt-Anchor" href="#变量引用">#</a></h2>
+<h2 id="运算符new和delete">运算符new和delete <a class="markdownIt-Anchor" href="#运算符new和delete">#</a></h2>
+<h2 id="布尔类型">布尔类型 <a class="markdownIt-Anchor" href="#布尔类型">#</a></h2>
+<p>在C语言中，关系运算和逻辑运算的结果有两种，真和假：0 表示假，非 0 表示真。</p>
+<p>C语言并没有彻底从语法上支持“真”和“假”，只是用 1 和 0 来代表。这点在 C++ 中得到了改善，C++ 新增了bool类型，它一般占用 1 个字节长度。bool 类型只有两个取值，true 和 false：true 表示“真”，false 表示“假”。</p>
+<p>遗憾的是，在 C++ 中使用 cout 输出 bool 变量的值时还是用数字 1 和 0 表示，而不是 true 或 false。</p>
+<p>示例：</p>
+<pre class="hljs"><code><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-keyword">int</span> a, b;
+    <span class="hljs-keyword">bool</span> flag;  <span class="hljs-comment">//布尔变量</span>
+    <span class="hljs-built_in">cin</span>&gt;&gt;a&gt;&gt;b;
+    flag = a &gt; b;
+    <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"flag = "</span>&lt;&lt;flag&lt;&lt;<span class="hljs-built_in">endl</span>;
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>10 20↙<br>
+flag = 0</p>
+<h2 id="inline内联函数">inline内联函数 <a class="markdownIt-Anchor" href="#inline内联函数">#</a></h2>
+
+      
+    </div>
+    <div  dir="ltr" class="level article-bar is-mobile">
+      <div class="level-item has-text-centered">
+        <a title="previous page" class="previouse-article-link" href="01环境搭建.html"><span class="icon icon-previous" data-icon="previous"></span><span class="link-content">&laquo; Previous</span></a>
+      </div>
+      <div class="level-item has-text-centered">
+        <a title="font size" class="link-item link-item-size">
+          <span class="icon icon-size" data-icon="size"></span>
+        </a>
+      </div>
+      <div class="level-item has-text-centered">
+        <a title="table of content" class="link-item link-item-toc">
+          <span class="icon icon-toc" data-icon="toc"></span>
+        </a>
+      </div>
+      <div class="level-item has-text-centered">
+        <a title="top" href="#">
+          <span class="icon icon-up" data-icon="up"></span>
+          <span class="link-content">⤊ Top</span>
+        </a>
+      </div>
+      <div class="level-item has-text-centered">
+        <a title="next page" class="next-article-link" href="03类和对象.html"><span class="icon icon-next" data-icon="next"></span><span class="link-content">Next &raquo;</span></a>
+      </div>
+    </div>
+  </div>
+  <div class="column is-2-widescreen is-hidden">
+  </div>
+</div>
+
+<div class="columns foot">
+  <div class="column is-3 is-offset-9 build-by">
+    Build by <a href="https://github.com/ruanyf/loppo" target="_blank">Loppo</a> 0.6.6
+  </div>
+</div>
+
+<div class="book-toc notification is-warning is-hidden">
+  <h3>Table of chapters &nbsp;<span class="title-close"><a class="button is-danger"> Close </a></span></h3>
+  <ul class="chapter-area"><li class="chapter-item "><a href="01环境搭建.html">环境搭建</a></li><li class="chapter-item chapter-item-current"><a href="02语言特性.html">语言特性</a></li><li class="chapter-item "><a href="03类和对象.html">类和对象</a></li><li class="chapter-item "><a href="04模板.html">include<iostream></a></li><li class="chapter-item "><a href="05运算符重载.html">05运算符重载.md</a></li><li class="chapter-item "><a href="06异常处理.html">06异常处理.md</a></li></ul>
+</div>
+
+<div class="progress-indicator"></div>
+
+<!-- SCRIPTS -->
+<script>
+  var LOPPO = {};
+  LOPPO.current_path = '02语言特性.md';
+  LOPPO.relative_root_path = '';
+  LOPPO.article_toc = "<ul class=\"markdownIt-TOC\">\n<li><a href=\"#%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4\">命名空间</a></li>\n<li><a href=\"#%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA\">输入输出</a></li>\n<li><a href=\"#%E5%AE%9A%E4%B9%89%E5%B8%B8%E9%87%8F\">定义常量</a></li>\n<li><a href=\"#%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD\">函数重载</a></li>\n<li><a href=\"#%E5%87%BD%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC\">函数默认值</a></li>\n<li><a href=\"#%E5%8F%98%E9%87%8F%E5%BC%95%E7%94%A8\">变量引用</a></li>\n<li><a href=\"#%E8%BF%90%E7%AE%97%E7%AC%A6new%E5%92%8Cdelete\">运算符new和delete</a></li>\n<li><a href=\"#%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B\">布尔类型</a></li>\n<li><a href=\"#inline%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0\">inline内联函数</a></li>\n</ul>\n";
+</script>
+<script src="assets/js/app.js"></script>
+
+</body>
+</html>
+
